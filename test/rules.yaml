@@ -1,0 +1,5 @@
+entities:
+  - source: type1
+    file:
+      fields:
+        - toto
