@@ -4,17 +4,16 @@ from .entity import Entity
 
 
 class Rules:
-    def __init__(self):
+    def __init__(self, path):
         self.entities = []
-
-    def load(self, path, sources_by_id):
         with open(path, 'r') as stream:
             try:
-                rules = yaml.safe_load(stream)
+                self.rules = yaml.safe_load(stream)
             except yaml.YAMLError as exc:
-                print(exc)
+                raise exc
+        self.entity_rules = self.rules["entities"]
 
-        entity_rules = rules["entities"]
-        self.entities = [Entity(sources_by_id, rule) for rule in entity_rules]
+    def exec(self, sources_by_id):
+        self.entities = [Entity(sources_by_id, rule) for rule in self.entity_rules]
         for entity in self.entities:
             entity.parse()

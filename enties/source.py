@@ -2,10 +2,8 @@ import yaml
 
 
 class Sources:
-    def __init__(self):
+    def __init__(self, path):
         self.sources_by_id = dict()
-
-    def load(self, path):
         with open(path, 'r') as stream:
             try:
                 sources = yaml.safe_load(stream)
