@@ -3,11 +3,9 @@ from enties.rule import Rules
 
 
 def main():
-    sources = Sources()
-    sources.load("test/sources.yaml")
-
-    rules = Rules()
-    rules.load("test/rules.yaml", sources.get_by_id())
+    sources = Sources("test/sources.yaml")
+    rules = Rules("test/rules.yaml")
+    print(rules.exec(sources.sources_by_id))
 
 
 if __name__ == '__main__':

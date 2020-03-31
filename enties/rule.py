@@ -11,9 +11,11 @@ class Rules:
                 self.rules = yaml.safe_load(stream)
             except yaml.YAMLError as exc:
                 raise exc
-        self.entity_rules = self.rules["entities"]
+        entity_rules = self.rules["entities"]
+        self.entities = [Entity(rule) for rule in entity_rules]
 
     def exec(self, sources_by_id):
-        self.entities = [Entity(sources_by_id, rule) for rule in self.entity_rules]
+        entities = []
         for entity in self.entities:
-            entity.parse()
+            entities += entity.parse(sources_by_id)
+        return entities

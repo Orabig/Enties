@@ -6,16 +6,19 @@ entities:
         block = "block" separator block_id space "{" members "}"
         members = space (member space)*
         member = label space ":" space value
-        block_id = char+
-        label = char+
+        block_id = notspace+
+        label = notspace+
         value = char*
         string = char*
-        char = ~"[0-9a-zA-Z]"
+        char = ~"[0-9a-z ]"i
+        notspace = ~"[0-9a-z]"i
         separator = ~"\\s" space
-        space = ~"\\s*"
+        comments = ~"#.*$"
+        space = ~"\\s*(#.*$\\s*)*"m
       extractor:
+        type: dict
         entity_from: block
         id_from: block_id
-        attribute_from: member   # TODO : name of the PEG rule which should contain a key and 0 or more values
+        attribute_from: member
         key_from: label
         value_from: value

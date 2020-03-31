@@ -1,0 +1,15 @@
+block abcdef {
+  name: first block
+  id: abcdef
+}
+
+block edfgh {
+  name:second block
+}
+
+# This block will probably fail to check some rule later
+block ijkl {
+  name: third block
+  id: mnopq
+}
+

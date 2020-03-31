@@ -1,4 +1,3 @@
 - id: type1
   file:
     path: test/sources/type1/*
-    recurse: false   # go subdirs ?

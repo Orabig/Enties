@@ -1,0 +1,4 @@
+block xyz {
+  name: simple block
+  id: xyz
+}
