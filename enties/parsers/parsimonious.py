@@ -13,7 +13,6 @@ class Parsimonious:
 
 
 class EntityVisitor(NodeVisitor):
-    output = []
     current_entity = {}
     current_entity_id = None
     current_attribute = None
@@ -21,6 +20,8 @@ class EntityVisitor(NodeVisitor):
     current_attribute_value = None
 
     def __init__(self, config):
+        self.type = config.get('type', 'list')
+        self.output = [] if self.type == 'list' else {}
         self.entity_from = config.get('entity_from', 'entity')
         self.id_from = config.get('id_from', 'id')
         self.attribute_from = config.get('attribute_from', 'attribute')
@@ -29,10 +30,16 @@ class EntityVisitor(NodeVisitor):
 
     def generic_visit(self, node, children):
         if node.expr.name == self.entity_from:
-            self.output.append(self.current_entity.copy())
+            if self.type == 'list':
+                self.output.append(self.current_entity.copy())
+            else:
+                # TODO : check id dup
+                self.output[self.current_entity_id] = self.current_entity.copy()
             self.current_entity = {}
         elif node.expr.name == self.attribute_from:
             self.current_entity[self.current_attribute_key] = self.current_attribute_value
+        elif node.expr.name == self.id_from:
+            self.current_entity_id = node.text
         elif node.expr.name == self.key_from:
             self.current_attribute_key = node.text
         elif node.expr.name == self.value_from:
