@@ -1,5 +1,21 @@
 entities:
   - source: type1
-    file:
-      fields:
-        - toto
+    parsimonious:
+      grammar: |
+        blocks  = space? block ( space block)* space?
+        block = "block" separator block_id space "{" members "}"
+        members = space (member space)*
+        member = label space ":" space value
+        block_id = char+
+        label = char+
+        value = char*
+        string = char*
+        char = ~"[0-9a-zA-Z]"
+        separator = ~"\\s" space
+        space = ~"\\s*"
+      extractor:
+        entity_from: block
+        id_from: block_id
+        attribute_from: member   # TODO : name of the PEG rule which should contain a key and 0 or more values
+        key_from: label
+        value_from: value
