@@ -1,0 +1,26 @@
+relations:
+  - from:
+      type: A
+    to:
+      type: B
+
+entities:
+  - source: typeA
+    type: A
+    parsimonious:
+      # aaa 12345 xxx
+      grammar: |
+        lines  = line ( nl line )* nl?
+        line = space? word space word space word (space attributes)*
+        word = ~"([0-9a-z]+)"i
+        attributes = lvalue "=" rvalue
+        lvalue = ~"([0-9a-z]+)"i      # Do NOT change to "word" because parsing optimisation
+        rvalue = ~"([0-9a-z]+)"i      # will remove these expressions
+        space = ~"\\s+"
+        nl = ~"\\n"
+      extractor:
+        entity_from: line
+        attributes_from:
+          - parent: attributes
+            keys: [ lvalue ]
+            values: [ rvalue ]

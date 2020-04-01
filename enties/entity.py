@@ -19,13 +19,11 @@ class Entity:
                 result = dict()
                 result['path'] = meta.path
                 result['source'] = self.source_id
-                result['entity'] = self.parser.parse(content)
+                # TODO : this should be made a real list (with common meta put inside it)
+                result['entities'] = self.parser.parse(content)
                 entities.append(result)
             except BaseException as ex:
-                print("ERROR : Could not parse source [%s] '%s' with '%s' : '%s" % (self.source_id, meta.path, self.parser_type, ex))
-                print("        Skipping...")
+                raise ex
+                #print("ERROR : Could not parse source [%s] '%s' with '%s' : '%s" % (self.source_id, meta.path, self.parser_type, ex))
+                #print("        Skipping...")
         return entities
-
-
-class Foo:
-    pass

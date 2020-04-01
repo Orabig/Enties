@@ -1,0 +1,6 @@
+- id: typeA
+  file:
+    path: ./sources/typeA.txt
+- id: typeB
+  file:
+    path: ./sources/typeB.txt

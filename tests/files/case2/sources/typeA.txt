@@ -1,0 +1,5 @@
+aaa 12345 xxx a=1
+bbb 23456 yyy b=2 a=7
+ccc 12345 zzz c=3 a=6 e=9
+ddd 23456 yyy a=6 e=6
+eee 99999 zzz f=2

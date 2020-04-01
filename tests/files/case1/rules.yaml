@@ -16,9 +16,8 @@ entities:
         comments = ~"#.*$"
         space = ~"\\s*(#.*$\\s*)*"m
       extractor:
-        type: dict
         entity_from: block
-        id_from: block_id
-        attribute_from: member
-        key_from: label
-        value_from: value
+        attributes_from:
+          - parent: member
+            keys: [ label ]
+            values: [ value ]

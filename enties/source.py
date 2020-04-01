@@ -4,14 +4,14 @@ from .sources.file import File
 
 
 class Sources:
-    def __init__(self, path):
+    def __init__(self, config_file):
         self.sources_by_id = dict()
-        base_path = os.path.dirname(path)
-        with open(path, 'r') as stream:
+        base_path = os.path.dirname(config_file)
+        with open(config_file, 'r') as config:
             try:
-                sources = yaml.safe_load(stream)
+                sources = yaml.safe_load(config)
             except yaml.YAMLError as ex:
-                print("ERROR : loading '%s' source : %s" %(path, ex))
+                print("ERROR : loading '%s' source : %s" % (config_file, ex))
         for source in sources:
             self.sources_by_id[source["id"]] = create_provider(source, base_path)
 
