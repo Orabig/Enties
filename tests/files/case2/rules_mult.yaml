@@ -24,3 +24,9 @@ entities:
           - parent: attributes
             keys: [ lvalue ]
             values: [ rvalue ]
+          - parent: line
+            child: word
+            seq:
+              - col1
+              - col2
+              - col3

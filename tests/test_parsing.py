@@ -52,3 +52,44 @@ class TestSimpleCase1(unittest.TestCase):
                                                 {'f': '2'}],
                                    'path': 'files/case2/sources/typeA.txt',
                                    'source': 'typeA'}])
+
+    def test_parse_file_seq(self):
+        from enties.source import Sources
+        from enties.rule import Rules
+        sources = Sources("files/case2/sources.yaml")
+        rules = Rules("files/case2/rules_seq.yaml")
+        result = rules.exec(sources.sources_by_id)
+        self.assertEqual(result, [{'entities': [{'col1': 'aaa', 'col2': '12345', 'col3': 'xxx'},
+                                                {'col1': 'bbb', 'col2': '23456', 'col3': 'yyy'},
+                                                {'col1': 'ccc', 'col2': '12345', 'col3': 'zzz'},
+                                                {'col1': 'ddd', 'col2': '23456', 'col3': 'yyy'},
+                                                {'col1': 'eee', 'col2': '99999', 'col3': 'zzz'}],
+                                   'path': 'files/case2/sources/typeA.txt',
+                                   'source': 'typeA'}])
+
+    def test_parse_file_mult(self):
+        from enties.source import Sources
+        from enties.rule import Rules
+        sources = Sources("files/case2/sources.yaml")
+        rules = Rules("files/case2/rules_mult.yaml")
+        result = rules.exec(sources.sources_by_id)
+        self.assertEqual(result, [{'entities': [{'a': '1', 'col1': 'aaa', 'col2': '12345', 'col3': 'xxx'},
+                                                {'a': '7',
+                                                 'b': '2',
+                                                 'col1': 'bbb',
+                                                 'col2': '23456',
+                                                 'col3': 'yyy'},
+                                                {'a': '6',
+                                                 'c': '3',
+                                                 'col1': 'ccc',
+                                                 'col2': '12345',
+                                                 'col3': 'zzz',
+                                                 'e': '9'},
+                                                {'a': '6',
+                                                 'col1': 'ddd',
+                                                 'col2': '23456',
+                                                 'col3': 'yyy',
+                                                 'e': '6'},
+                                                {'col1': 'eee', 'col2': '99999', 'col3': 'zzz', 'f': '2'}],
+                                   'path': 'files/case2/sources/typeA.txt',
+                                   'source': 'typeA'}])
