@@ -27,6 +27,8 @@ class EntityVisitor(NodeVisitor):
         self.child_by_parent = {}
         self.seq_by_child = {}
         self.seq_nodes = set()
+        # groups :
+        self.groups_by_parent = {}
 
         # Dynamic state while the tree is visited
         self.output = []
@@ -38,8 +40,8 @@ class EntityVisitor(NodeVisitor):
         self.current_seq = {}
 
         self.entity_from = config.get('entity_from', 'entity')
-        self.attributes_from = config.get('attributes_from')
-        for attr_from in self.attributes_from:
+        attributes_from = config.get('attributes_from')
+        for attr_from in attributes_from:
             parent = attr_from.get('parent', 'attribute')
             if 'seq' in attr_from.keys():
                 self.parent_nodes[parent] = 'seq'
@@ -50,7 +52,8 @@ class EntityVisitor(NodeVisitor):
                 self.seq_nodes.add(child)
             elif 'groups' in attr_from.keys():
                 self.parent_nodes[parent] = 'groups'
-                raise ("groups pas connu")
+                groups = attr_from['groups']
+                self.groups_by_parent[parent] = groups
             else:
                 self.parent_nodes[parent] = 'key_value'
                 key = attr_from.get('keys', ['key'])
@@ -77,7 +80,7 @@ class EntityVisitor(NodeVisitor):
             if parent_type == 'seq':
                 self.append_seq(node_name)
             elif parent_type == 'groups':
-                raise ("groups pas connu in visit")
+                self.append_groups(node_name, node)
             else:
                 self.append_key_val(node_name)
         if node_name == self.entity_from:
@@ -99,3 +102,8 @@ class EntityVisitor(NodeVisitor):
         seq_values = self.current_seq[child]
         self.current_entity.update(dict(zip(seq_keys, seq_values)))
         self.current_seq[child] = []
+
+    def append_groups(self, parent_node, node):
+        groups_keys = self.groups_by_parent[parent_node]
+        groups_values = node.match.groups()
+        self.current_entity.update(dict(zip(groups_keys, groups_values)))

@@ -67,29 +67,54 @@ class TestSimpleCase1(unittest.TestCase):
                                    'path': 'files/case2/sources/typeA.txt',
                                    'source': 'typeA'}])
 
+    def test_parse_file_groups(self):
+        from enties.source import Sources
+        from enties.rule import Rules
+        sources = Sources("files/case2/sources.yaml")
+        rules = Rules("files/case2/rules_groups.yaml")
+        result = rules.exec(sources.sources_by_id)
+        self.assertEqual(result, [{'entities': [{'prefix': 'x', 'suffix': 'xx'},
+                                                {'prefix': 'y', 'suffix': 'yy'},
+                                                {'prefix': 'z', 'suffix': 'zz'},
+                                                {'prefix': 'y', 'suffix': 'yy'},
+                                                {'prefix': 'z', 'suffix': 'zz'}],
+                                   'path': 'files/case2/sources/typeA.txt',
+                                   'source': 'typeA'}])
+
     def test_parse_file_multi(self):
         from enties.source import Sources
         from enties.rule import Rules
         sources = Sources("files/case2/sources.yaml")
         rules = Rules("files/case2/rules_multi.yaml")
         result = rules.exec(sources.sources_by_id)
-        self.assertEqual(result, [{'entities': [{'a': '1', 'col1': 'aaa', 'col2': '12345', 'col3': 'xxx'},
+        self.assertEqual(result, [{'entities': [{'a': '1',
+                                                 'col1': 'aaa',
+                                                 'col2': '12345',
+                                                 'prefix': 'x',
+                                                 'suffix': 'xx'},
                                                 {'a': '7',
                                                  'b': '2',
                                                  'col1': 'bbb',
                                                  'col2': '23456',
-                                                 'col3': 'yyy'},
+                                                 'prefix': 'y',
+                                                 'suffix': 'yy'},
                                                 {'a': '6',
                                                  'c': '3',
                                                  'col1': 'ccc',
                                                  'col2': '12345',
-                                                 'col3': 'zzz',
-                                                 'e': '9'},
+                                                 'e': '9',
+                                                 'prefix': 'z',
+                                                 'suffix': 'zz'},
                                                 {'a': '6',
                                                  'col1': 'ddd',
                                                  'col2': '23456',
-                                                 'col3': 'yyy',
-                                                 'e': '6'},
-                                                {'col1': 'eee', 'col2': '99999', 'col3': 'zzz', 'f': '2'}],
+                                                 'e': '6',
+                                                 'prefix': 'y',
+                                                 'suffix': 'yy'},
+                                                {'col1': 'eee',
+                                                 'col2': '99999',
+                                                 'f': '2',
+                                                 'prefix': 'z',
+                                                 'suffix': 'zz'}],
                                    'path': 'files/case2/sources/typeA.txt',
                                    'source': 'typeA'}])
