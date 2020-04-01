@@ -67,11 +67,11 @@ class TestSimpleCase1(unittest.TestCase):
                                    'path': 'files/case2/sources/typeA.txt',
                                    'source': 'typeA'}])
 
-    def test_parse_file_mult(self):
+    def test_parse_file_multi(self):
         from enties.source import Sources
         from enties.rule import Rules
         sources = Sources("files/case2/sources.yaml")
-        rules = Rules("files/case2/rules_mult.yaml")
+        rules = Rules("files/case2/rules_multi.yaml")
         result = rules.exec(sources.sources_by_id)
         self.assertEqual(result, [{'entities': [{'a': '1', 'col1': 'aaa', 'col2': '12345', 'col3': 'xxx'},
                                                 {'a': '7',

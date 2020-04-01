@@ -13,29 +13,30 @@ class Parsimonious:
 
 
 class EntityVisitor(NodeVisitor):
-    # Configuration values
-    # Contains all nodes used in any key or value
-    attr_nodes = set()
-    # all parent nodes with the type of attribute (seq/groups/key_value)
-    parent_nodes = {}
-    # for a given parent, the list of keys (resp values)
-    key_nodes_by_parent = {}
-    val_nodes_by_parent = {}
-    # seq :
-    child_by_parent = {}
-    seq_by_child = {}
-    seq_nodes = set()
-
-    # Dynamic state while the tree is visited
-    output = []
-    # the entity which is being built
-    current_entity = {}
-    # key-values : contain last values for keys or values in attr_nodes
-    current_attrs = {}
-    # seq : contain last values for child in seq
-    current_seq = {}
 
     def __init__(self, config):
+        # Configuration values
+        # Contains all nodes used in any key or value
+        self.attr_nodes = set()
+        # all parent nodes with the type of attribute (seq/groups/key_value)
+        self.parent_nodes = {}
+        # for a given parent, the list of keys (resp values)
+        self.key_nodes_by_parent = {}
+        self.val_nodes_by_parent = {}
+        # seq :
+        self.child_by_parent = {}
+        self.seq_by_child = {}
+        self.seq_nodes = set()
+
+        # Dynamic state while the tree is visited
+        self.output = []
+        # the entity which is being built
+        self.current_entity = {}
+        # key-values : contain last values for keys or values in attr_nodes
+        self.current_attrs = {}
+        # seq : contain last values for child in seq
+        self.current_seq = {}
+
         self.entity_from = config.get('entity_from', 'entity')
         self.attributes_from = config.get('attributes_from')
         for attr_from in self.attributes_from:
