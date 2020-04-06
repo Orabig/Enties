@@ -1,5 +1,7 @@
 entities:
   - source: type1
+    strip_comments:
+        style: python
     parsimonious:
       grammar: |
         blocks  = space? block ( space block)* space?
@@ -13,7 +15,7 @@ entities:
         char = ~"[0-9a-z ]"i
         notspace = ~"[0-9a-z]"i
         separator = ~"\\s" space
-        space = ~"\\s*(#.*$\\s*)*"m
+        space = ~"\\s*"m
       extractor:
         entity_from: block
         attributes_from:

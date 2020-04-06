@@ -1,0 +1,4 @@
+- id: type1
+  allow_empty: false
+  file:
+    path: ./sources/type2/*.txt

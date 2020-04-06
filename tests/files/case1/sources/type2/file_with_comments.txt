@@ -1,0 +1,16 @@
+# This is a comment
+block abcdef {
+  name: first block
+  id: abcdef # this is a comment too...
+}
+# Block 2
+block edfgh {
+  name:second block
+}
+
+# This block will probably fail to check some rule later
+block ijkl {
+  name: third block
+  id: mnopq
+}
+

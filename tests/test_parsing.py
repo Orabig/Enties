@@ -3,7 +3,7 @@ import unittest
 
 class TestSimpleCase1(unittest.TestCase):
 
-    def test_parse_file_with_parcimonious(self):
+    def test_parcimonious_parse(self):
         from enties.source import Sources
         from enties.rule import Rules
         sources = Sources("files/case1/sources.yaml")
@@ -26,6 +26,22 @@ class TestSimpleCase1(unittest.TestCase):
                                                 {'id': 'mnopq', 'name': 'third block'},
                                                 {'id': 'xyz', 'name': 'simple block'}],
                                    'path': 'files/case1/sources/type1/file2.txt',
+                                   'source': 'type1'}])
+
+    def test_parse_file_with_comments(self):
+        from enties.source import Sources
+        from enties.rule import Rules
+        sources = Sources("files/case1/sources_type2.yaml")
+        self.assertIn('type1', sources.sources_by_id)
+
+        source = sources.sources_by_id['type1']
+        paths = [meta.path for meta in source.provide()]
+        rules = Rules("files/case1/rules_no_comment.yaml")
+        result = rules.exec(sources.sources_by_id)
+        self.assertEqual(result, [{'entities': [{'id': 'abcdef', 'name': 'first block'},
+                                                {'name': 'second block'},
+                                                {'id': 'mnopq', 'name': 'third block'}],
+                                   'path': 'files/case1/sources/type2/file_with_comments.txt',
                                    'source': 'type1'}])
 
     def test_parse_file_key_value(self):
