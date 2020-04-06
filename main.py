@@ -7,7 +7,7 @@ def main():
     sources = Sources("test/sources.yaml")
     # TODO : rules should be given as main parameter
     rules = Rules("test/rules.yaml")
-    print(rules.exec(sources.sources_by_id))
+    print(rules.exec(sources))
 
 
 if __name__ == '__main__':

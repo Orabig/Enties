@@ -14,7 +14,7 @@ class TestSimpleCase1(unittest.TestCase):
         self.assertEqual(paths, ['files/case1/sources/type1/file1.txt', 'files/case1/sources/type1/file2.txt'])
 
         rules = Rules("files/case1/rules.yaml")
-        result = rules.exec(sources.sources_by_id)
+        result = rules.exec(sources)
         self.assertEqual(result, [{'entities': [{'id': 'abcdef', 'name': 'first block'},
                                                 {'name': 'second block'},
                                                 {'id': 'mnopq', 'name': 'third block'},
@@ -37,7 +37,7 @@ class TestSimpleCase1(unittest.TestCase):
         source = sources.sources_by_id['type1']
         paths = [meta.path for meta in source.provide()]
         rules = Rules("files/case1/rules_no_comment.yaml")
-        result = rules.exec(sources.sources_by_id)
+        result = rules.exec(sources)
         self.assertEqual(result, [{'entities': [{'id': 'abcdef', 'name': 'first block'},
                                                 {'name': 'second block'},
                                                 {'id': 'mnopq', 'name': 'third block'}],
@@ -60,7 +60,7 @@ class TestSimpleCase1(unittest.TestCase):
         self.assertEqual(pathsB, ['files/case2/sources/typeB.txt'])
 
         rules = Rules("files/case2/rules_kv.yaml")
-        result = rules.exec(sources.sources_by_id)
+        result = rules.exec(sources)
         self.assertEqual(result, [{'entities': [{'a': '1'},
                                                 {'a': '7', 'b': '2'},
                                                 {'a': '6', 'c': '3', 'e': '9'},
@@ -74,7 +74,7 @@ class TestSimpleCase1(unittest.TestCase):
         from enties.rule import Rules
         sources = Sources("files/case2/sources.yaml")
         rules = Rules("files/case2/rules_seq.yaml")
-        result = rules.exec(sources.sources_by_id)
+        result = rules.exec(sources)
         self.assertEqual(result, [{'entities': [{'col1': 'aaa', 'col2': '12345', 'col3': 'xxx'},
                                                 {'col1': 'bbb', 'col2': '23456', 'col3': 'yyy'},
                                                 {'col1': 'ccc', 'col2': '12345', 'col3': 'zzz'},
@@ -88,7 +88,7 @@ class TestSimpleCase1(unittest.TestCase):
         from enties.rule import Rules
         sources = Sources("files/case2/sources.yaml")
         rules = Rules("files/case2/rules_groups.yaml")
-        result = rules.exec(sources.sources_by_id)
+        result = rules.exec(sources)
         self.assertEqual(result, [{'entities': [{'prefix': 'x', 'suffix': 'xx'},
                                                 {'prefix': 'y', 'suffix': 'yy'},
                                                 {'prefix': 'z', 'suffix': 'zz'},
@@ -102,7 +102,7 @@ class TestSimpleCase1(unittest.TestCase):
         from enties.rule import Rules
         sources = Sources("files/case2/sources.yaml")
         rules = Rules("files/case2/rules_multi.yaml")
-        result = rules.exec(sources.sources_by_id)
+        result = rules.exec(sources)
         self.assertEqual(result, [{'entities': [{'a': '1',
                                                  'col1': 'aaa',
                                                  'col2': '12345',

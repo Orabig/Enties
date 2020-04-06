@@ -11,11 +11,11 @@ class File:
         path = os.path.normpath(os.path.join(self.base, self.path))
         for file in glob.glob(path):
             with open(file) as handle:
-                file_meta = Meta()
                 normalized_path = file.replace('\\', '/')
-                file_meta.path = normalized_path
-                file_meta.content = handle.read()
+                file_meta = Meta(normalized_path, handle.read())
                 yield file_meta
 
 class Meta:
-    pass
+  def __init__(self, uri, content):
+      self.path = uri
+      self.content = content

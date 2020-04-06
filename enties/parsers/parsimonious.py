@@ -1,10 +1,17 @@
+import sys
+
+from parsimonious.exceptions import BadGrammar
 from parsimonious.grammar import Grammar
 from parsimonious.nodes import NodeVisitor
 
 
 class Parsimonious:
-    def __init__(self, config):
-        self.grammar = Grammar(config['grammar'])
+    def __init__(self, config, rule_path):
+        try:
+            self.grammar = Grammar(config['grammar'])
+        except BadGrammar as grammarEx:
+            print("CRITICAL : BadGrammar in %s :\n%s" % (rule_path, grammarEx))
+            sys.exit(1)
         self.extractor = EntityVisitor(config['extractor'])
 
     def parse(self, text):

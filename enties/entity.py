@@ -4,18 +4,18 @@ from .processors.commentStripper import strip_comments
 
 
 class Entity:
-    def __init__(self, rules):
+    def __init__(self, rules, rule_path):
         self.source_id = rules['source']
         self.strip_comments = rules['strip_comments'] if 'strip_comments' in rules else None
         if 'parsimonious' in rules:
             self.parser_type = 'parsimonious'
-            self.parser = Parsimonious(rules['parsimonious'])
+            self.parser = Parsimonious(rules['parsimonious'], rule_path)
         else:
             raise BaseException("Rules must use one of the following parsers : [parsimonious]")
 
-    def parse(self, sources_by_id):
+    def parse(self, sources):
         entities = []
-        source = sources_by_id[self.source_id]
+        source = sources.sources_by_id[self.source_id]
         for meta in source.provide():
             try:
                 content = meta.content
@@ -28,9 +28,7 @@ class Entity:
                 result['entities'] = self.parser.parse(content)
                 entities.append(result)
             except ParseError as parseEx:
-                print("EXC in meta=%s" % meta)
+                print("WARNING : ParseError in file:%s :\n%s" % (meta.path, parseEx))
             except BaseException as ex:
                 raise ex
-                # print("ERROR : Could not parse source [%s] '%s' with '%s' : '%s" % (self.source_id, meta.path, self.parser_type, ex))
-                # print("        Skipping...")
         return entities
