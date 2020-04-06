@@ -15,8 +15,8 @@ entities:
         word = ~"([0-9a-z]+)"i
         special_word = ~"([a-z])([0-9a-z]+)"i
         attributes = lvalue "=" rvalue
-        lvalue = ~"([0-9a-z]+)"i      # Do NOT change to "word" because parsing optimisation
-        rvalue = ~"([0-9a-z]+)"i      # will remove these expressions
+        lvalue = word ""
+        rvalue = word ""
         space = ~"\\s+"
         nl = ~"\\n"
       extractor:
