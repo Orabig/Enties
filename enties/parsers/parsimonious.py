@@ -48,31 +48,32 @@ class EntityVisitor(NodeVisitor):
 
         self.entity_from = config.get('entity_from', 'entity')
         attributes_from = config.get('attributes_from')
-        for attr_from in attributes_from:
-            parent = attr_from.get('parent', 'attribute')
-            if 'seq' in attr_from.keys():
-                self.parent_nodes[parent] = 'seq'
-                child = attr_from['child']
-                seq = attr_from['seq']
-                self.child_by_parent[parent] = child
-                self.seq_by_child[child] = seq
-                self.seq_nodes.add(child)
-            elif 'groups' in attr_from.keys():
-                self.parent_nodes[parent] = 'groups'
-                groups = attr_from['groups']
-                self.groups_by_parent[parent] = groups
-            else:
-                self.parent_nodes[parent] = 'key_value'
-                key = attr_from.get('keys', ['key'])
-                val = attr_from.get('values', ['value'])
-                if not isinstance(key, list):
-                    raise ("'keys' should contain an array")
-                if not isinstance(val, list):
-                    raise ("'value' should contain an array")
-                self.attr_nodes.update(key)
-                self.attr_nodes.update(val)
-                self.key_nodes_by_parent[parent] = key
-                self.val_nodes_by_parent[parent] = val
+        if attributes_from is not None:
+            for attr_from in attributes_from:
+                parent = attr_from.get('parent', 'attribute')
+                if 'seq' in attr_from.keys():
+                    self.parent_nodes[parent] = 'seq'
+                    child = attr_from['child']
+                    seq = attr_from['seq']
+                    self.child_by_parent[parent] = child
+                    self.seq_by_child[child] = seq
+                    self.seq_nodes.add(child)
+                elif 'groups' in attr_from.keys():
+                    self.parent_nodes[parent] = 'groups'
+                    groups = attr_from['groups']
+                    self.groups_by_parent[parent] = groups
+                else:
+                    self.parent_nodes[parent] = 'key_value'
+                    key = attr_from.get('keys', ['key'])
+                    val = attr_from.get('values', ['value'])
+                    if not isinstance(key, list):
+                        raise ("'keys' should contain an array")
+                    if not isinstance(val, list):
+                        raise ("'value' should contain an array")
+                    self.attr_nodes.update(key)
+                    self.attr_nodes.update(val)
+                    self.key_nodes_by_parent[parent] = key
+                    self.val_nodes_by_parent[parent] = val
 
     def generic_visit(self, node, children):
         node_name = node.expr.name
