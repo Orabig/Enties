@@ -1,0 +1,65 @@
+import unittest
+
+
+class TestSimpleCase1(unittest.TestCase):
+
+    def test_groups(self):
+        from enties.source import Sources
+        from enties.rule import Rules
+        sources = Sources("files/process/sources.yaml")
+        rules = Rules("files/process/rules.yaml")
+        result = rules.exec(sources)
+        self.assertEqual(result, [{'entities': [{'id': '27475', 'name': 'Leonard', 'serial': '584642300'},
+                                                {'id': '29704', 'name': 'Julian', 'serial': '713927028'},
+                                                {'id': '88743', 'name': 'Baxter', 'serial': '306626151'},
+                                                {'id': '34784', 'name': 'Bevis', 'serial': '642962898'},
+                                                {'id': '82284', 'name': 'Clark', 'serial': '132621301'},
+                                                {'id': '53827', 'name': 'Henry', 'serial': '292366390'},
+                                                {'id': '13435', 'name': 'Prescott', 'serial': '145626354'},
+                                                {'id': '57656', 'name': 'Oliver', 'serial': '242199651'},
+                                                {'id': '12905', 'name': 'Tanek', 'serial': '800511024'},
+                                                {'id': '55882', 'name': 'Jesse', 'serial': '790180665'},
+                                                {'id': '17227', 'name': 'Jelani', 'serial': '139196687'},
+                                                {'id': '69659', 'name': 'Kevin', 'serial': '719115347'},
+                                                {'id': '89499', 'name': 'Thaddeus', 'serial': '588030544'},
+                                                {'id': '73219', 'name': 'Ahmed', 'serial': '829520402'},
+                                                {'id': '39282', 'name': 'Roth', 'serial': '978718328'},
+                                                {'id': '38136', 'name': 'Amery', 'serial': '592717797'},
+                                                {'id': '30560', 'name': 'George', 'serial': '794625459'},
+                                                {'id': '53868', 'name': 'Cyrus', 'serial': '346547664'},
+                                                {'id': '87424', 'name': 'Erasmus', 'serial': '266809110'},
+                                                {'id': '12090', 'name': 'Luke', 'serial': '723420345'},
+                                                {'id': '75169', 'name': 'Logan', 'serial': '157394305'},
+                                                {'id': '27982', 'name': 'Xander', 'serial': '348708108'},
+                                                {'id': '87900', 'name': 'Ashton', 'serial': '819569476'},
+                                                {'id': '75204', 'name': 'Omar', 'serial': '149371254'},
+                                                {'id': '69217', 'name': 'Forrest', 'serial': '390573996'}],
+                                   'path': 'files/process/typeA.txt',
+                                   'source': 'typeA'},
+                                  {'entities': [{'kind': 'a', 'serial': '584642300'},
+                                                {'kind': 'b', 'serial': '713927028'},
+                                                {'kind': 'b', 'serial': '306626151'},
+                                                {'kind': 'c', 'serial': '642962898'},
+                                                {'kind': 'd', 'serial': '132621301'},
+                                                {'kind': 'b', 'serial': '292366390'},
+                                                {'kind': 'c', 'serial': '145626354'},
+                                                {'kind': 'b', 'serial': '242199651'},
+                                                {'kind': 'a', 'serial': '800511024'},
+                                                {'kind': 'd', 'serial': '790180665'},
+                                                {'kind': 'c', 'serial': '139196687'},
+                                                {'kind': 'd', 'serial': '719115347'},
+                                                {'kind': 'b', 'serial': '588030544'},
+                                                {'kind': 'a', 'serial': '829520402'},
+                                                {'kind': 'a', 'serial': '978718328'},
+                                                {'kind': 'b', 'serial': '592717797'},
+                                                {'kind': 'a', 'serial': '794625459'},
+                                                {'kind': 'c', 'serial': '346547664'},
+                                                {'kind': 'd', 'serial': '266809110'},
+                                                {'kind': 'a', 'serial': '723420345'},
+                                                {'kind': 'b', 'serial': '157394305'},
+                                                {'kind': 'c', 'serial': '348708108'},
+                                                {'kind': 'a', 'serial': '819569476'},
+                                                {'kind': 'd', 'serial': '149371254'},
+                                                {'kind': 'd', 'serial': '390573996'}],
+                                   'path': 'files/process/typeB.txt',
+                                   'source': 'typeB'}])

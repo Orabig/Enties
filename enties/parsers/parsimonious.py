@@ -46,6 +46,7 @@ class EntityVisitor(NodeVisitor):
         # seq : contain last values for child in seq
         self.current_seq = {}
 
+        self.attribute_prefix = config.get('attribute_prefix', '_')
         self.entity_from = config.get('entity_from', 'entity')
         attributes_from = config.get('attributes_from')
         if attributes_from is not None:
@@ -95,6 +96,10 @@ class EntityVisitor(NodeVisitor):
             # Stores the currently extracted entity and reset the variable
             self.output.append(self.current_entity.copy())
             self.current_entity = {}
+        if self.attribute_prefix is not None:
+            if str(node_name).startswith(self.attribute_prefix):
+                attribute_name=str(node_name).replace(self.attribute_prefix, '', 1)
+                self.current_entity[attribute_name] = node.text
         return self.output
 
     def append_key_val(self, parent_node):
