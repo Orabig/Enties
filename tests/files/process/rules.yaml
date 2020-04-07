@@ -1,8 +1,5 @@
 relations:
-  - from:
-      type: A
-    to:
-      type: B
+  - A.number=B.serial
 
 entities:
   - source: typeA
@@ -10,10 +7,10 @@ entities:
     parsimonious:
       grammar: |
         lines  = line ( nl line )* nl?
-        line = ( _name ) space ( _serial ) space ( _id )
+        line = ( _name ) space ( _number ) space ( _id )
         int = ~"[0-9]+"
         _name = ~"\\w+"
-        _serial = int ""
+        _number = int ""
         _id = int ""
         space = ~"\\s+"
         nl = ~"\\n"

@@ -16,7 +16,8 @@ class Parsimonious:
 
     def parse(self, text):
         tree = self.grammar.parse(text)
-        return self.extractor.visit(tree)
+        result = self.extractor.visit(tree)
+        return result
 
 
 class EntityVisitor(NodeVisitor):

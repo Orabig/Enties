@@ -3,9 +3,10 @@ from .parsers.parsimonious import Parsimonious
 from .processors.commentStripper import strip_comments
 
 
-class Entity:
+class EntityDefinition:
     def __init__(self, rules, rule_path):
         self.source_id = rules['source']
+        self.type = rules['type']
         self.strip_comments = rules['strip_comments'] if 'strip_comments' in rules else None
         if 'parsimonious' in rules:
             self.parser_type = 'parsimonious'
@@ -25,8 +26,9 @@ class Entity:
                 if self.strip_comments is not None:
                     content = strip_comments(content, self.strip_comments)
                 # TODO : this should be made a real list (with common meta put inside it)
-                result['entities'] = self.parser.parse(content)
-                entities.append(result)
+                all_entities = self.parser.parse(content)
+                # TODO  insert meta in each element
+                entities += all_entities
             except ParseError as parseEx:
                 print("WARNING : ParseError in file:%s :\n%s" % (meta.path, parseEx))
             except BaseException as ex:
