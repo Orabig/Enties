@@ -15,7 +15,7 @@ class Rules:
                 raise exc
         entity_definitions = self.rules["entities"]
         self.entities_rules = [EntityDefinition(rule, rule_path) for rule in entity_definitions]
-        relations_definitions = self.rules["relations"]
+        relations_definitions = self.rules.get("relations", [])
         self.relations = [parse_relation(rule) for rule in relations_definitions]
 
     def exec(self, sources):

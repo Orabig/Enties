@@ -6,7 +6,7 @@ from .processors.commentStripper import strip_comments
 class EntityDefinition:
     def __init__(self, rules, rule_path):
         self.source_id = rules['source']
-        self.type = rules['type']
+        self.type = rules['type'] if 'type' in rules else self.source_id
         self.strip_comments = rules['strip_comments'] if 'strip_comments' in rules else None
         if 'parsimonious' in rules:
             self.parser_type = 'parsimonious'
