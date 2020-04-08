@@ -12,11 +12,12 @@ class Parsimonious:
         except BadGrammar as grammarEx:
             print("CRITICAL : BadGrammar in %s :\n%s" % (rule_path, grammarEx))
             sys.exit(1)
-        self.extractor = EntityVisitor(config['extractor'])
+        self.extractor_config = config['extractor']
 
     def parse(self, text):
         tree = self.grammar.parse(text)
-        result = self.extractor.visit(tree)
+        extractor = EntityVisitor(self.extractor_config)
+        result = extractor.visit(tree)
         return result
 
 
